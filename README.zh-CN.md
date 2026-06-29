@@ -18,6 +18,10 @@
 
 > 教程:**[图形界面版 → docs/usage/USAGE-gui.md](docs/usage/USAGE-gui.md)**(免终端)· **[命令行版 → docs/usage/USAGE.md](docs/usage/USAGE.md)**。
 
+![si4lockmac 菜单栏演示](media/menu-demo.gif)
+
+> 菜单栏操作(示意图):点顶部 🔒 图标 → 选「开启遮罩」→ 屏幕变黑并弹出密码框。
+
 ## si4lockmac 能为你做什么
 
 - 🕶️ **一键隐私遮罩** —— 一条命令(或一次点击)把所有显示器盖黑,旁人看不到你的

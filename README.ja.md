@@ -18,6 +18,10 @@
 
 > 使い方:**[GUI版 → docs/usage/USAGE-gui.md](docs/usage/USAGE-gui.md)**(ターミナル不要)· **[CLI版 → docs/usage/USAGE.md](docs/usage/USAGE.md)**。
 
+![si4lockmac メニューバー デモ](media/menu-demo.gif)
+
+> メニューバー操作（イメージ図）:🔒 アイコンをクリック →「遮蔽を表示 / Veil」を選択 → 画面が黒くなりパスワード入力欄が出ます。
+
 ## si4lockmac でできること
 
 - 🕶️ **即時のプライバシー目隠し** —— コマンド1つ（またはタップ1つ）で全ディスプレイを

@@ -64,6 +64,11 @@ works entirely on its own.)
 - **GUI / menu-bar (no terminal): [docs/usage/USAGE-gui.md](docs/usage/USAGE-gui.md)** — double-click installer, setup wizard, menu usage.
 - **Command-line reference: [docs/usage/USAGE.md](docs/usage/USAGE.md)** — full CLI + Telegram.
 
+![si4lockmac menu-bar demo](media/menu-demo.gif)
+
+> Menu-bar flow (illustration): click the 🔒 icon → pick **开启遮罩 / Veil** →
+> the screen veils black with a password prompt.
+
 ## Install
 
 **Homebrew (recommended):**
