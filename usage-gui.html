@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title class="i18n" data-zh="lockmac 图形界面使用教程" data-en="lockmac GUI Tutorial" data-ja="lockmac GUI 使い方ガイド">lockmac 图形界面使用教程</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;--bg2:#f8f9fb;--bg3:#f0f2f5;--border:#e2e6ed;
+  --accent-blue:#2563eb;--accent-green:#16a34a;--accent-orange:#d97706;
+  --accent-red:#dc2626;--accent-purple:#7c3aed;
+  --text:#1e293b;--text-muted:#64748b;--text-dim:#94a3b8;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:'Noto Sans SC',sans-serif;padding:40px 20px;line-height:1.6;}
+.page{max-width:960px;margin:0 auto;}
+code,.mono{font-family:'JetBrains Mono',monospace;}
+.langbar{position:sticky;top:0;z-index:50;background:var(--bg);padding:10px 0 12px;margin-bottom:16px;border-bottom:1px solid var(--border);display:flex;gap:8px;}
+.langbar button{font-family:'Noto Sans SC',sans-serif;font-size:13px;padding:5px 14px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--text);cursor:pointer;transition:background .15s ease,color .15s ease;}
+.langbar button:hover{background:var(--bg3);}
+.langbar button.active{background:var(--accent-blue);color:#fff;border-color:var(--accent-blue);}
+header h1{font-size:28px;margin:0 0 6px;}
+header .sub{color:var(--text-muted);font-size:14px;margin-bottom:6px;}
+header .links{font-size:13px;}
+header .links a{color:var(--accent-blue);text-decoration:none;}
+section[id]{scroll-margin-top:20px;margin-bottom:40px;}
+.section-title{font-size:18px;font-weight:700;color:var(--text);margin:0 0 20px;
+  display:flex;align-items:center;gap:10px;}
+.section-title::before{content:'';display:block;width:4px;height:20px;border-radius:2px;background:var(--accent-blue);}
+.section-title.green::before{background:var(--accent-green);}
+.section-title.orange::before{background:var(--accent-orange);}
+.section-title.purple::before{background:var(--accent-purple);}
+.section-title.red::before{background:var(--accent-red);}
+p{margin:0 0 14px;}
+table{width:100%;border-collapse:collapse;background:var(--bg2);border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-bottom:16px;}
+thead tr{background:var(--bg3);}
+th{padding:11px 14px;color:var(--text-muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px;text-align:left;}
+td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;line-height:1.6;font-size:14px;}
+tr:last-child td{border-bottom:none;}
+td code,th code{background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:12px;}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;font-family:'JetBrains Mono',monospace;}
+.tag-blue{background:rgba(37,99,235,.08);color:#2563eb;}
+.tag-green{background:rgba(22,163,74,.08);color:#16a34a;}
+.tag-orange{background:rgba(217,119,6,.08);color:#d97706;}
+.tag-red{background:rgba(220,38,38,.08);color:#dc2626;}
+.tag-purple{background:rgba(124,58,237,.08);color:#7c3aed;}
+.alert{border-radius:10px;padding:14px 18px;font-size:13px;display:flex;gap:12px;margin-bottom:16px;}
+.alert.tip{background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.15);}
+.alert.warn{background:rgba(217,119,6,.05);border:1px solid rgba(217,119,6,.15);}
+.alert.success{background:rgba(22,163,74,.05);border:1px solid rgba(22,163,74,.15);}
+.alert-text{color:var(--text-muted);}
+.alert-text strong{color:var(--text);}
+.steps{margin:0 0 8px;}
+.step-row{display:flex;gap:14px;}
+.step-connector{display:flex;flex-direction:column;align-items:center;}
+.step-dot{width:28px;height:28px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.step-dot.blue{background:rgba(37,99,235,.08);border-color:#2563eb;color:#2563eb;}
+.step-dot.green{background:rgba(22,163,74,.08);border-color:#16a34a;color:#16a34a;}
+.step-dot.orange{background:rgba(217,119,6,.08);border-color:#d97706;color:#d97706;}
+.step-line{width:2px;flex:1;background:var(--border);min-height:14px;margin:4px 0;}
+.step-content{padding-bottom:18px;}
+.step-label{font-weight:600;margin-bottom:2px;}
+.step-desc{color:var(--text-muted);font-size:13px;}
+.outline-block{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:32px;}
+.outline-title{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.mindmap{width:100%;height:auto;}
+.mindmap a{cursor:pointer;}
+/* Floating TOC */
+.toc-toggle{position:fixed;z-index:101;right:24px;bottom:24px;width:52px;height:52px;border-radius:50%;border:none;background:var(--accent-blue);color:#fff;cursor:grab;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(37,99,235,.35),0 2px 4px rgba(0,0,0,.1);transition:box-shadow .2s ease;touch-action:none;user-select:none;-webkit-user-select:none;}
+.toc-toggle:hover{box-shadow:0 6px 16px rgba(37,99,235,.45);}
+.toc-toggle.dragging{cursor:grabbing;box-shadow:0 8px 24px rgba(37,99,235,.55);transition:none;}
+.toc-toggle svg{width:22px;height:22px;fill:#fff;pointer-events:none;}
+.toc-toggle .icon-close{display:none;}
+.toc-open .toc-toggle .icon-menu{display:none;}
+.toc-open .toc-toggle .icon-close{display:block;}
+.toc-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.4);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:99;backdrop-filter:blur(2px);}
+.toc-open .toc-backdrop{opacity:1;pointer-events:auto;}
+.toc-panel{position:fixed;z-index:100;width:280px;max-height:calc(100vh - 120px);background:var(--accent-blue);border-radius:16px;padding:16px 14px;overflow-y:auto;box-shadow:0 12px 32px rgba(37,99,235,.25),0 4px 12px rgba(0,0,0,.12);opacity:0;transform:scale(.96);pointer-events:none;transition:opacity .2s ease,transform .2s ease;right:24px;bottom:88px;transform-origin:bottom right;}
+.toc-open .toc-panel{opacity:1;transform:scale(1);pointer-events:auto;}
+.toc-header{display:flex;align-items:center;gap:8px;padding:6px 10px 12px;border-bottom:1px solid rgba(255,255,255,.15);color:#fff;font-size:14px;font-weight:700;margin-bottom:8px;}
+.toc-list{display:flex;flex-direction:column;gap:6px;}
+.toc-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.08);color:#fff;text-decoration:none;font-size:13px;font-weight:500;transition:background .15s ease,transform .15s ease;cursor:pointer;}
+.toc-item:hover{background:rgba(255,255,255,.15);transform:translateX(2px);}
+.toc-item.active{background:#fff;color:var(--accent-blue);font-weight:700;}
+.toc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.toc-dot.blue{background:#60a5fa;}.toc-dot.green{background:#4ade80;}.toc-dot.orange{background:#fbbf24;}.toc-dot.purple{background:#c084fc;}.toc-dot.red{background:#f87171;}
+.toc-item.active .toc-dot.blue{background:var(--accent-blue);}.toc-item.active .toc-dot.green{background:var(--accent-green);}.toc-item.active .toc-dot.orange{background:var(--accent-orange);}.toc-item.active .toc-dot.purple{background:var(--accent-purple);}.toc-item.active .toc-dot.red{background:var(--accent-red);}
+@media (max-width:640px){.toc-panel{width:auto;max-height:70vh;}.toc-toggle{right:16px;bottom:16px;width:48px;height:48px;}}
+</style>
+</head>
+<body>
+<div class="toc-backdrop"></div>
+<button class="toc-toggle" type="button" aria-label="目录">
+  <svg class="icon-menu" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+  <svg class="icon-close" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+</button>
+<nav class="toc-panel" aria-label="文档目录">
+  <div class="toc-header"><span class="i18n" data-zh="📑 目录" data-en="📑 Contents" data-ja="📑 目次">📑 目录</span></div>
+  <div class="toc-list">
+    <a class="toc-item" href="#sec1"><span class="toc-dot blue"></span><span class="i18n" data-zh="① 核心概念" data-en="① Core Concepts" data-ja="① コアコンセプト">① 核心概念</span></a>
+    <a class="toc-item" href="#sec2"><span class="toc-dot green"></span><span class="i18n" data-zh="② 安装(双击即可)" data-en="② Install (double-click)" data-ja="② インストール">② 安装(双击即可)</span></a>
+    <a class="toc-item" href="#sec3"><span class="toc-dot orange"></span><span class="i18n" data-zh="③ 首次设置引导" data-en="③ Setup Wizard" data-ja="③ 設定ウィザード">③ 首次设置引导</span></a>
+    <a class="toc-item" href="#sec4"><span class="toc-dot purple"></span><span class="i18n" data-zh="④ 菜单栏用法" data-en="④ Menu Bar" data-ja="④ メニューバー">④ 菜单栏用法</span></a>
+    <a class="toc-item" href="#sec5"><span class="toc-dot red"></span><span class="i18n" data-zh="⑤ 绑定 Telegram" data-en="⑤ Link Telegram" data-ja="⑤ Telegram 連携">⑤ 绑定 Telegram</span></a>
+    <a class="toc-item" href="#sec6"><span class="toc-dot blue"></span><span class="i18n" data-zh="⑥ 授予系统权限" data-en="⑥ System Permissions" data-ja="⑥ システム権限">⑥ 授予系统权限</span></a>
+    <a class="toc-item" href="#sec7"><span class="toc-dot green"></span><span class="i18n" data-zh="⑦ 卸载" data-en="⑦ Uninstall" data-ja="⑦ アンインストール">⑦ 卸载</span></a>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="langbar">
+    <button onclick="setLang('zh')" id="b-zh">中文</button>
+    <button onclick="setLang('en')" id="b-en">English</button>
+    <button onclick="setLang('ja')" id="b-ja">日本語</button>
+  </div>
+
+  <header>
+    <h1 class="i18n" data-zh="🔒 lockmac 图形界面使用教程" data-en="🔒 lockmac Tutorial · GUI Edition" data-ja="🔒 lockmac 使い方ガイド · GUI版">🔒 lockmac 图形界面使用教程</h1>
+    <div class="sub i18n" data-zh="macOS 隐私遮罩 · 锁定 · 定时开关 · Telegram/iMessage 远程 —— 全程免终端" data-en="macOS privacy veil · lock · dead-man switch · Telegram/iMessage remote — no terminal needed" data-ja="macOS プライバシー遮蔽 · ロック · デッドマン · Telegram/iMessage 遠隔 —— ターミナル不要">macOS 隐私遮罩 · 锁定 · 定时开关 · Telegram/iMessage 远程 —— 全程免终端</div>
+    <div class="links"><span class="i18n" data-zh="命令行版见 " data-en="Command-line edition: " data-ja="コマンドライン版は ">命令行版见 </span><a href="USAGE.md">USAGE.md</a><span class="i18n" data-zh="　·　两套底层一致、设置互通" data-en=" · same engine, shared settings" data-ja=" · 同一エンジン・設定共有">　·　两套底层一致、设置互通</span></div>
+  </header>
+
+  <div class="outline-block">
+    <div class="outline-title i18n" data-zh="📑 文档大纲" data-en="📑 Document Outline" data-ja="📑 ドキュメント構成">📑 文档大纲</div>
+    <svg class="mindmap" viewBox="0 0 920 470" xmlns="http://www.w3.org/2000/svg">
+      <rect x="370" y="210" width="180" height="50" rx="25" fill="rgba(37,99,235,0.1)" stroke="#2563eb" stroke-width="2"/>
+      <text class="i18n-svg" data-zh="lockmac 图形教程" data-en="lockmac GUI Guide" data-ja="lockmac GUI ガイド" x="460" y="240" text-anchor="middle" fill="#2563eb" font-size="14" font-weight="700" font-family="'Noto Sans SC',sans-serif">lockmac 图形教程</text>
+      <!-- left branches -->
+      <a href="#sec1"><line x1="370" y1="230" x2="210" y2="70" stroke="#2563eb" stroke-width="2" opacity="0.5"/>
+        <rect x="60" y="50" width="150" height="38" rx="19" fill="rgba(37,99,235,0.08)" stroke="#2563eb" stroke-width="1.5"/>
+        <text class="i18n-svg" data-zh="① 核心概念" data-en="① Core Concepts" data-ja="① コアコンセプト" x="135" y="74" text-anchor="middle" fill="#2563eb" font-size="12" font-weight="600" font-family="'Noto Sans SC',sans-serif">① 核心概念</text></a>
+      <a href="#sec2"><line x1="370" y1="230" x2="200" y2="170" stroke="#16a34a" stroke-width="2" opacity="0.5"/>
+        <rect x="50" y="150" width="150" height="38" rx="19" fill="rgba(22,163,74,0.08)" stroke="#16a34a" stroke-width="1.5"/>
+        <text class="i18n-svg" data-zh="② 安装(双击)" data-en="② Install (2-click)" data-ja="② インストール" x="125" y="174" text-anchor="middle" fill="#16a34a" font-size="12" font-weight="600" font-family="'Noto Sans SC',sans-serif">② 安装(双击)</text></a>
+      <a href="#sec3"><line x1="370" y1="235" x2="200" y2="280" stroke="#d97706" stroke-width="2" opacity="0.5"/>
+        <rect x="50" y="261" width="150" height="38" rx="19" fill="rgba(217,119,6,0.08)" stroke="#d97706" stroke-width="1.5"/>
+        <text class="i18n-svg" data-zh="③ 设置引导" data-en="③ Setup Wizard" data-ja="③ 設定ウィザード" x="125" y="285" text-anchor="middle" fill="#d97706" font-size="12" font-weight="600" font-family="'Noto Sans SC',sans-serif">③ 设置引导</text></a>
+      <a href="#sec4"><line x1="370" y1="240" x2="210" y2="390" stroke="#7c3aed" stroke-width="2" opacity="0.5"/>
+        <rect x="60" y="371" width="150" height="38" rx="19" fill="rgba(124,58,237,0.08)" stroke="#7c3aed" stroke-width="1.5"/>
+        <text class="i18n-svg" data-zh="④ 菜单栏用法" data-en="④ Menu Bar" data-ja="④ メニューバー" x="135" y="395" text-anchor="middle" fill="#7c3aed" font-size="12" font-weight="600" font-family="'Noto Sans SC',sans-serif">④ 菜单栏用法</text></a>
+      <!-- right branches -->
+      <a href="#sec5"><line x1="550" y1="230" x2="710" y2="70" stroke="#dc2626" stroke-width="2" opacity="0.5"/>
+        <rect x="710" y="50" width="150" height="38" rx="19" fill="rgba(220,38,38,0.08)" stroke="#dc2626" stroke-width="1.5"/>
+        <text class="i18n-svg" data-zh="⑤ 绑定 Telegram" data-en="⑤ Link Telegram" data-ja="⑤ Telegram 連携" x="785" y="74" text-anchor="middle" fill="#dc2626" font-size="12" font-weight="600" font-family="'Noto Sans SC',sans-serif">⑤ 绑定 Telegram</text></a>
+      <a href="#sec6"><line x1="550" y1="232" x2="720" y2="180" stroke="#2563eb" stroke-width="2" opacity="0.5"/>
+        <rect x="720" y="161" width="150" height="38" rx="19" fill="rgba(37,99,235,0.08)" stroke="#2563eb" stroke-width="1.5"/>
+        <text class="i18n-svg" data-zh="⑥ 授予权限" data-en="⑥ Permissions" data-ja="⑥ 権限付与" x="795" y="185" text-anchor="middle" fill="#2563eb" font-size="12" font-weight="600" font-family="'Noto Sans SC',sans-serif">⑥ 授予权限</text></a>
+      <a href="#sec7"><line x1="550" y1="238" x2="720" y2="300" stroke="#16a34a" stroke-width="2" opacity="0.5"/>
+        <rect x="720" y="281" width="150" height="38" rx="19" fill="rgba(22,163,74,0.08)" stroke="#16a34a" stroke-width="1.5"/>
+        <text class="i18n-svg" data-zh="⑦ 卸载" data-en="⑦ Uninstall" data-ja="⑦ アンインストール" x="795" y="305" text-anchor="middle" fill="#16a34a" font-size="12" font-weight="600" font-family="'Noto Sans SC',sans-serif">⑦ 卸载</text></a>
+    </svg>
+  </div>
+
+  <section id="sec1">
+    <div class="section-title i18n" data-zh="① 核心概念" data-en="① Core Concepts" data-ja="① コアコンセプト">① 核心概念</div>
+    <table>
+      <thead><tr><th class="i18n" data-zh="概念" data-en="Concept" data-ja="コンセプト">概念</th><th class="i18n" data-zh="是什么" data-en="What it is" data-ja="内容">是什么</th></tr></thead>
+      <tbody>
+        <tr><td class="i18n" data-zh="<strong>遮罩 (veil)</strong>" data-en="<strong>Veil</strong>" data-ja="<strong>遮蔽 (veil)</strong>"><strong>遮罩 (veil)</strong></td><td class="i18n" data-zh="盖住整屏的隐私层,<strong>不锁机</strong> —— 远程操作、截图照常,只是别人看不见你屏幕。需密码(+可选 2FA)解除。" data-en="A privacy layer covering the entire screen. It does <strong>not</strong> lock the machine — remote operation and screenshots keep working, others just can't see your screen. Removed with your password (+ optional 2FA)." data-ja="画面全体を覆うプライバシー層。<strong>ロックはしません</strong> —— リモート操作やスクリーンショットは通常どおり動作し、他人にあなたの画面が見えなくなるだけ。解除にはパスワード(+任意で 2FA)が必要。">盖住整屏的隐私层,<strong>不锁机</strong> —— 远程操作、截图照常,只是别人看不见你屏幕。需密码(+可选 2FA)解除。</td></tr>
+        <tr><td class="i18n" data-zh="<strong>系统锁屏 (lock)</strong>" data-en="<strong>System lock</strong>" data-ja="<strong>システムロック (lock)</strong>"><strong>系统锁屏 (lock)</strong></td><td class="i18n" data-zh="真锁屏,单向:能远程锁,但只能到机器前输<strong>系统</strong>密码解。" data-en="A real screen lock, one-way: you can lock it remotely, but it can only be unlocked by entering your <strong>system</strong> password at the machine." data-ja="本物の画面ロック。一方向で、リモートからロックできますが、解除はマシンの前で<strong>システム</strong>パスワードを入力するしかありません。">真锁屏,单向:能远程锁,但只能到机器前输<strong>系统</strong>密码解。</td></tr>
+        <tr><td class="i18n" data-zh="<strong>开机自动升遮罩</strong>" data-en="<strong>Auto-raise veil on startup</strong>" data-ja="<strong>起動時に遮蔽を自動表示</strong>"><strong>开机自动升遮罩</strong></td><td class="i18n" data-zh="每次开机/登录自动升遮罩,需输入 lockmac 密码才进入 —— 核心防护(引导默认开启)。" data-en="Automatically raises the veil on every boot/login, requiring your lockmac password before you can get in — the core protection (enabled by default in the setup wizard)." data-ja="起動/ログインのたびに遮蔽を自動表示し、lockmac パスワードを入力しないと入れません —— 中核となる保護機能(ウィザードでデフォルト有効)。">每次开机/登录自动升遮罩,需输入 lockmac 密码才进入 —— 核心防护(引导默认开启)。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="sec2">
+    <div class="section-title green i18n" data-zh="② 安装(双击即可)" data-en="② Installation (Just Double-Click)" data-ja="② インストール(ダブルクリックするだけ)">② 安装(双击即可)</div>
+    <p class="i18n" data-zh="拿到 <code>dist/</code> 文件夹里的 <code>lockmac-0.5.0.pkg</code> 和 <code>Install lockmac.command</code>。" data-en="You receive two items in the <code>dist/</code> folder: <code>lockmac-0.5.0.pkg</code> and <code>Install lockmac.command</code>." data-ja="<code>dist/</code> フォルダの2つ、<code>lockmac-0.5.0.pkg</code> と <code>Install lockmac.command</code> を受け取ります。">拿到 <code>dist/</code> 文件夹里的 <code>lockmac-0.5.0.pkg</code> 和 <code>Install lockmac.command</code>。</p>
+    <div class="steps">
+      <div class="step-row"><div class="step-connector"><div class="step-dot green">1</div><div class="step-line"></div></div>
+        <div class="step-content"><div class="step-label i18n" data-zh="双击 <code>Install lockmac.command</code>" data-en="Double-click <code>Install lockmac.command</code>" data-ja="<code>Install lockmac.command</code> をダブルクリック">双击 <code>Install lockmac.command</code></div><div class="step-desc i18n" data-zh="第一次被系统拦(“无法验证开发者”)→ <strong>右键 → 打开 → 打开</strong>(仅第一次)。" data-en="The first time, the system blocks it (“cannot verify developer”) → <strong>right-click → Open → Open</strong> (first time only)." data-ja="初回はシステムにブロックされます(「開発元を検証できません」)→ <strong>右クリック → 開く → 開く</strong>(初回のみ)。">第一次被系统拦(“无法验证开发者”)→ <strong>右键 → 打开 → 打开</strong>(仅第一次)。</div></div></div>
+      <div class="step-row"><div class="step-connector"><div class="step-dot green">2</div><div class="step-line"></div></div>
+        <div class="step-content"><div class="step-label i18n" data-zh="输入 Mac 登录密码" data-en="Enter your Mac login password" data-ja="Mac のログインパスワードを入力">输入 Mac 登录密码</div><div class="step-desc i18n" data-zh="弹出密码框,用于安装授权一次。" data-en="A password dialog appears, used to authorize the install once." data-ja="パスワード入力欄が表示され、インストールの認可に1回使用します。">弹出密码框,用于安装授权一次。</div></div></div>
+      <div class="step-row"><div class="step-connector"><div class="step-dot green">3</div></div>
+        <div class="step-content"><div class="step-label i18n" data-zh="自动完成" data-en="Done automatically" data-ja="自動的に完了">自动完成</div><div class="step-desc i18n" data-zh="菜单栏出现 🔒,设置引导自动弹出。" data-en="🔒 appears in the menu bar and the setup wizard pops up automatically." data-ja="メニューバーに 🔒 が表示され、設定ウィザードが自動的に表示されます。">菜单栏出现 🔒,设置引导自动弹出。</div></div></div>
+    </div>
+    <div class="alert success"><span>✅</span><div class="alert-text i18n" data-zh="<strong>无需付费签名</strong>:包内程序已自签名(ad-hoc),任何 Mac(含 Apple 芯片)都能跑。也可用命令行 <code>sudo installer -pkg lockmac-0.5.0.pkg -target /</code> 安装(无拦截)。" data-en="<strong>No paid signing required</strong>: the bundled program is already self-signed (ad-hoc), so it runs on any Mac (including Apple silicon). You can also install from the command line with <code>sudo installer -pkg lockmac-0.5.0.pkg -target /</code> (no blocking)." data-ja="<strong>有料署名は不要</strong>:同梱プログラムはすでに自己署名(ad-hoc)済みで、どの Mac(Apple シリコン含む)でも動作します。コマンドライン <code>sudo installer -pkg lockmac-0.5.0.pkg -target /</code> でもインストール可能(ブロックなし)。"><strong>无需付费签名</strong>:包内程序已自签名(ad-hoc),任何 Mac(含 Apple 芯片)都能跑。也可用命令行 <code>sudo installer -pkg lockmac-0.5.0.pkg -target /</code> 安装(无拦截)。</div></div>
+  </section>
+
+  <section id="sec3">
+    <div class="section-title orange i18n" data-zh="③ 首次设置引导" data-en="③ First-Run Setup Wizard" data-ja="③ 初回設定ウィザード">③ 首次设置引导</div>
+    <p class="i18n" data-zh="引导依次弹出,<strong>全程不用终端</strong>:" data-en="The wizard pops up step by step, <strong>without ever touching the terminal</strong>:" data-ja="ウィザードが順番に表示され、<strong>最後までターミナルは不要</strong>です:">引导依次弹出,<strong>全程不用终端</strong>:</p>
+    <table>
+      <thead><tr><th class="i18n" data-zh="步骤" data-en="Step" data-ja="ステップ">步骤</th><th class="i18n" data-zh="说明" data-en="Description" data-ja="説明">说明</th><th class="i18n" data-zh="能否跳过" data-en="Skippable?" data-ja="スキップ可否">能否跳过</th></tr></thead>
+      <tbody>
+        <tr><td class="i18n" data-zh="<strong>① 选择语言</strong>" data-en="<strong>① Choose language</strong>" data-ja="<strong>① 言語を選択</strong>"><strong>① 选择语言</strong></td><td class="i18n" data-zh="下拉选 15 种语言(中/英/日/德/法/西/意/葡/俄/韩/阿/泰/瑞典/荷/印地)。" data-en="Pick one of 15 languages from the dropdown (Chinese / English / Japanese / German / French / Spanish / Italian / Portuguese / Russian / Korean / Arabic / Thai / Swedish / Dutch / Hindi)." data-ja="ドロップダウンから 15 言語のいずれかを選択(中/英/日/独/仏/西/伊/葡/露/韓/アラビア/タイ/スウェーデン/オランダ/ヒンディー)。">下拉选 15 种语言(中/英/日/德/法/西/意/葡/俄/韩/阿/泰/瑞典/荷/印地)。</td><td><span class="tag tag-red i18n" data-zh="必选" data-en="Required" data-ja="必須">必选</span></td></tr>
+        <tr><td class="i18n" data-zh="<strong>② 设置密码</strong>" data-en="<strong>② Set password</strong>" data-ja="<strong>② パスワードを設定</strong>"><strong>② 设置密码</strong></td><td class="i18n" data-zh="解除遮罩用,<strong>必填</strong>(无「取消」)。" data-en="Used to remove the veil, <strong>required</strong> (no “Cancel”)." data-ja="遮蔽の解除に使用、<strong>必須</strong>(「キャンセル」なし)。">解除遮罩用,<strong>必填</strong>(无「取消」)。</td><td><span class="tag tag-red i18n" data-zh="不可跳过" data-en="Cannot skip" data-ja="スキップ不可">不可跳过</span></td></tr>
+        <tr><td class="i18n" data-zh="<strong>③ 开机升遮罩</strong>" data-en="<strong>③ Auto-raise veil on startup</strong>" data-ja="<strong>③ 起動時に遮蔽を自動表示</strong>"><strong>③ 开机升遮罩</strong></td><td class="i18n" data-zh="<strong>默认开启</strong>;不想要点「关闭」。" data-en="<strong>Enabled by default</strong>; click “Disable” if you don't want it." data-ja="<strong>デフォルト有効</strong>;不要なら「オフ」をクリック。"><strong>默认开启</strong>;不想要点「关闭」。</td><td><span class="tag tag-green i18n" data-zh="默认开" data-en="On by default" data-ja="デフォルトオン">默认开</span></td></tr>
+        <tr><td class="i18n" data-zh="<strong>④ 两步验证 2FA</strong>" data-en="<strong>④ Two-factor authentication (2FA)</strong>" data-ja="<strong>④ 二段階認証 2FA</strong>"><strong>④ 两步验证 2FA</strong></td><td class="i18n" data-zh="解锁需密码 + 6 位动态码,更安全。" data-en="Unlocking requires password + a 6-digit dynamic code, for extra security." data-ja="解除にパスワード + 6 桁のワンタイムコードが必要になり、より安全。">解锁需密码 + 6 位动态码,更安全。</td><td><span class="tag tag-blue i18n" data-zh="下一步" data-en="Next" data-ja="次へ">下一步</span></td></tr>
+        <tr><td class="i18n" data-zh="<strong>⑤ 绑定 Telegram</strong>" data-en="<strong>⑤ Link Telegram</strong>" data-ja="<strong>⑤ Telegram を連携</strong>"><strong>⑤ 绑定 Telegram</strong></td><td class="i18n" data-zh="手机远程锁屏/拍照/告警(见 ⑤)。" data-en="Remotely lock the screen / take photos / get alerts from your phone (see ⑤)." data-ja="スマホからリモートでロック/撮影/アラート(⑤ を参照)。">手机远程锁屏/拍照/告警(见 ⑤)。</td><td><span class="tag tag-blue i18n" data-zh="下一步" data-en="Next" data-ja="次へ">下一步</span></td></tr>
+        <tr><td class="i18n" data-zh="<strong>⑥ 绑定 iMessage</strong>" data-en="<strong>⑥ Link iMessage</strong>" data-ja="<strong>⑥ iMessage を連携</strong>"><strong>⑥ 绑定 iMessage</strong></td><td class="i18n" data-zh="用自己的 Apple ID 收告警/发命令(无需 bot)。" data-en="Receive alerts / send commands using your own Apple ID (no bot needed)." data-ja="自分の Apple ID でアラート受信/コマンド送信(bot 不要)。">用自己的 Apple ID 收告警/发命令(无需 bot)。</td><td><span class="tag tag-blue i18n" data-zh="下一步" data-en="Next" data-ja="次へ">下一步</span></td></tr>
+        <tr><td class="i18n" data-zh="<strong>⑦ 自动启动服务</strong>" data-en="<strong>⑦ Auto-start all services</strong>" data-ja="<strong>⑦ すべてのサービスを自動起動</strong>"><strong>⑦ 自动启动服务</strong></td><td class="i18n" data-zh="引导结尾<strong>自动</strong>拉起遮罩自启 + 监听 + 看护 + 监控。" data-en="At the end, the wizard <strong>automatically</strong> launches veil auto-start + listener + watchdog + monitoring." data-ja="ウィザードの最後で遮蔽の自動起動 + リスナー + 監視(watchdog)+ モニタリングを<strong>自動的に</strong>起動。">引导结尾<strong>自动</strong>拉起遮罩自启 + 监听 + 看护 + 监控。</td><td><span class="tag tag-green i18n" data-zh="自动" data-en="Automatic" data-ja="自動">自动</span></td></tr>
+        <tr><td class="i18n" data-zh="<strong>⑧ 权限提醒</strong>" data-en="<strong>⑧ Permission reminder</strong>" data-ja="<strong>⑧ 権限のリマインド</strong>"><strong>⑧ 权限提醒</strong></td><td class="i18n" data-zh="提示首次需手动各跑一次以授予系统权限(见 ⑥)。" data-en="Reminds you to run each feature once manually the first time to grant system permissions (see ⑥)." data-ja="システム権限を付与するため、初回は各機能を手動で1回ずつ実行する必要があると通知(⑥ を参照)。">提示首次需手动各跑一次以授予系统权限(见 ⑥)。</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <div class="alert success"><span>✅</span><div class="alert-text i18n" data-zh="设置完毕后,<strong>重启电脑登录即自动升遮罩</strong>。" data-en="Once setup is done, <strong>restart your Mac and the veil rises automatically on login</strong>." data-ja="設定が完了したら、<strong>Mac を再起動してログインすると遮蔽が自動表示</strong>されます。">设置完毕后,<strong>重启电脑登录即自动升遮罩</strong>。</div></div>
+  </section>
+
+  <section id="sec4">
+    <div class="section-title purple i18n" data-zh="④ 菜单栏 🔒 用法" data-en="④ Using the Menu Bar 🔒" data-ja="④ メニューバー 🔒 の使い方">④ 菜单栏 🔒 用法</div>
+    <div class="alert tip"><span>💡</span><div class="alert-text i18n" data-zh="刘海屏图标可能被挤到刘海后 —— 按住 <code>⌘</code> 拖走别的图标腾位置,或装免费的 <strong>Ice</strong> 管理菜单栏。" data-en="On notched displays the icon may be hidden behind the notch — hold <code>⌘</code> and drag other icons away to make room, or install the free <strong>Ice</strong> menu-bar manager." data-ja="ノッチ付きディスプレイではアイコンがノッチの後ろに隠れることがあります —— <code>⌘</code> を押しながら他のアイコンをドラッグして移動、または無料の <strong>Ice</strong> でメニューバーを管理。">刘海屏图标可能被挤到刘海后 —— 按住 <code>⌘</code> 拖走别的图标腾位置,或装免费的 <strong>Ice</strong> 管理菜单栏。</div></div>
+    <table>
+      <thead><tr><th class="i18n" data-zh="菜单项" data-en="Menu item" data-ja="メニュー項目">菜单项</th><th class="i18n" data-zh="作用" data-en="Function" data-ja="機能">作用</th></tr></thead>
+      <tbody>
+        <tr><td class="i18n" data-zh="状态" data-en="Status" data-ja="ステータス">状态</td><td class="i18n" data-zh="查看遮罩/监控/Telegram/2FA 是否开启" data-en="Check whether veil / monitoring / Telegram / 2FA are enabled" data-ja="遮蔽/モニタリング/Telegram/2FA が有効かを確認">查看遮罩/监控/Telegram/2FA 是否开启</td></tr>
+        <tr><td class="i18n" data-zh="🖥 开启遮罩 / ↩︎ 解除遮罩" data-en="🖥 Raise veil / ↩︎ Remove veil" data-ja="🖥 遮蔽を表示 / ↩︎ 遮蔽を解除">🖥 开启遮罩 / ↩︎ 解除遮罩</td><td class="i18n" data-zh="手动升/解隐私遮罩" data-en="Manually raise/remove the privacy veil" data-ja="プライバシー遮蔽を手動で表示/解除">手动升/解隐私遮罩</td></tr>
+        <tr><td class="i18n" data-zh="🔒 系统锁屏" data-en="🔒 System lock" data-ja="🔒 システムロック">🔒 系统锁屏</td><td class="i18n" data-zh="真锁屏(需系统密码解)" data-en="Real screen lock (system password to unlock)" data-ja="本物の画面ロック(解除にシステムパスワード)">真锁屏(需系统密码解)</td></tr>
+        <tr><td class="i18n" data-zh="🛡 监控电脑入侵" data-en="🛡 Monitor for intrusions" data-ja="🛡 PCへの侵入を監視">🛡 监控电脑入侵</td><td class="i18n" data-zh="开/关:SSH/远程/摄像头/麦克风/USB → 告警" data-en="On/off: SSH / remote / camera / microphone / USB → alerts" data-ja="オン/オフ:SSH/リモート/カメラ/マイク/USB → アラート">开/关:SSH/远程/摄像头/麦克风/USB → 告警</td></tr>
+        <tr><td class="i18n" data-zh="📸 拍照 + 录音" data-en="📸 Photo + audio" data-ja="📸 撮影 + 録音">📸 拍照 + 录音</td><td class="i18n" data-zh="一次拍照 + 录音并发到 Telegram" data-en="Take one photo + record audio and send to Telegram" data-ja="撮影 + 録音を1回行い Telegram に送信">一次拍照 + 录音并发到 Telegram</td></tr>
+        <tr><td class="i18n" data-zh="⏏️ 弹出 USB" data-en="⏏️ Eject USB" data-ja="⏏️ USB を取り出し">⏏️ 弹出 USB</td><td class="i18n" data-zh="卸载弹出所有外接 USB" data-en="Unmount and eject all external USB drives" data-ja="接続中のすべての外付け USB をアンマウントして取り出し">卸载弹出所有外接 USB</td></tr>
+        <tr><td class="i18n" data-zh="🗑 立即删除预设文件夹" data-en="🗑 Delete preset folders now" data-ja="🗑 プリセットフォルダを今すぐ削除">🗑 立即删除预设文件夹</td><td class="i18n" data-zh="删除「删除清单」里所有文件夹(列表确认)" data-en="Delete all folders in the “delete list” (confirmed via list)" data-ja="「削除リスト」内のすべてのフォルダを削除(リストで確認)">删除「删除清单」里所有文件夹(列表确认)</td></tr>
+        <tr><td class="i18n" data-zh="⚙ 设置" data-en="⚙ Settings" data-ja="⚙ 設定">⚙ 设置</td><td class="i18n" data-zh="密码 / 绑定TG / 2FA / 完全磁盘访问 / 定时开关 / 离线锁 / 监控间隔 / 删除文件夹清单 / 告警通道" data-en="Password / link Telegram / 2FA / Full Disk Access / scheduled on-off / offline lock / monitoring interval / delete-folder list / alert channels" data-ja="パスワード / Telegram 連携 / 2FA / フルディスクアクセス / スケジュール / オフラインロック / 監視間隔 / 削除フォルダリスト / アラートチャンネル">密码 / 绑定TG / 2FA / 完全磁盘访问 / 定时开关 / 离线锁 / 监控间隔 / 删除文件夹清单 / 告警通道</td></tr>
+        <tr><td class="i18n" data-zh="🧩 服务" data-en="🧩 Services" data-ja="🧩 サービス">🧩 服务</td><td class="i18n" data-zh="启动/停止全部服务、重启监听、菜单栏登录自启" data-en="Start/stop all services, restart listener, menu-bar login auto-start" data-ja="全サービスの起動/停止、リスナー再起動、メニューバーのログイン時自動起動">启动/停止全部服务、重启监听、菜单栏登录自启</td></tr>
+        <tr><td class="i18n" data-zh="🌐 语言" data-en="🌐 Language" data-ja="🌐 言語">🌐 语言</td><td class="i18n" data-zh="15 种语言即时切换" data-en="Switch instantly between 15 languages" data-ja="15 言語を即時切り替え">15 种语言即时切换</td></tr>
+        <tr><td class="i18n" data-zh="❤️ 打赏作者 / 退出" data-en="❤️ Tip the author / Quit" data-ja="❤️ 作者に投げ銭 / 終了">❤️ 打赏作者 / 退出</td><td class="i18n" data-zh="支持开发 / 退出 GUI(不影响后台守护)" data-en="Support development / quit the GUI (background daemons unaffected)" data-ja="開発を支援 / GUI を終了(バックグラウンドのデーモンには影響なし)">支持开发 / 退出 GUI(不影响后台守护)</td></tr>
+      </tbody>
+    </table>
+    <div class="alert tip"><span>💡</span><div class="alert-text i18n" data-zh="<strong>设置子菜单</strong>里:密码标「必须」、绑定TG 与 2FA 标「强烈建议」,<strong>已配置的会打勾 ✓</strong>。「删除文件夹清单 → 添加」会弹 <strong>Finder 选文件夹</strong>;「查看」是列表,每行带 ✕ 可移除。" data-en="In the <strong>Settings submenu</strong>: password is marked “required”, Telegram and 2FA are marked “strongly recommended”, and <strong>configured items show a ✓</strong>. “Delete folder list → Add” opens a <strong>Finder folder picker</strong>; “View” is a list where each row has a ✕ to remove it." data-ja="<strong>設定サブメニュー</strong>では:パスワードは「必須」、Telegram 連携と 2FA は「強く推奨」と表示され、<strong>設定済みの項目にはチェック ✓</strong> が付きます。「削除フォルダリスト → 追加」で <strong>Finder のフォルダ選択</strong>が開き、「表示」はリストで各行の ✕ で削除できます。"><strong>设置子菜单</strong>里:密码标「必须」、绑定TG 与 2FA 标「强烈建议」,<strong>已配置的会打勾 ✓</strong>。「删除文件夹清单 → 添加」会弹 <strong>Finder 选文件夹</strong>;「查看」是列表,每行带 ✕ 可移除。</div></div>
+  </section>
+
+  <section id="sec5">
+    <div class="section-title red i18n" data-zh="⑤ 绑定 Telegram(图形流程)" data-en="⑤ Linking Telegram (Graphical Flow)" data-ja="⑤ Telegram の連携(グラフィカルな手順)">⑤ 绑定 Telegram(图形流程)</div>
+    <p class="i18n" data-zh="设置 → 绑定 Telegram(或引导第 ⑤ 步):" data-en="Settings → Link Telegram (or step ⑤ in the wizard):" data-ja="設定 → Telegram を連携(またはウィザードの第 ⑤ ステップ):">设置 → 绑定 Telegram(或引导第 ⑤ 步):</p>
+    <div class="steps">
+      <div class="step-row"><div class="step-connector"><div class="step-dot orange">1</div><div class="step-line"></div></div>
+        <div class="step-content"><div class="step-label i18n" data-zh="点「如何获取 token?」" data-en="Click “How do I get a token?”" data-ja="「token の取得方法は?」をクリック">点「如何获取 token?」</div><div class="step-desc i18n" data-zh="打开图文教程 —— 在 @BotFather 创建 bot 拿到 token。" data-en="Opens an illustrated guide — create a bot with @BotFather to get the token." data-ja="図解付きチュートリアルが開きます —— @BotFather で bot を作成して token を取得。">打开图文教程 —— 在 @BotFather 创建 bot 拿到 token。</div></div></div>
+      <div class="step-row"><div class="step-connector"><div class="step-dot orange">2</div><div class="step-line"></div></div>
+        <div class="step-content"><div class="step-label i18n" data-zh="粘贴 token" data-en="Paste the token" data-ja="token を貼り付け">粘贴 token</div><div class="step-desc i18n" data-zh="在框里 <code>⌘V</code> 粘贴 → 确定。" data-en="Paste with <code>⌘V</code> in the box → confirm." data-ja="入力欄で <code>⌘V</code> で貼り付け → 確定。">在框里 <code>⌘V</code> 粘贴 → 确定。</div></div></div>
+      <div class="step-row"><div class="step-connector"><div class="step-dot orange">3</div><div class="step-line"></div></div>
+        <div class="step-content"><div class="step-label i18n" data-zh="给 bot 发条消息" data-en="Send your bot a message" data-ja="bot にメッセージを送信">给 bot 发条消息</div><div class="step-desc i18n" data-zh="弹「正在检测绑定…」后,去 Telegram 给你的 bot 发任意一条消息。" data-en="When “Checking link…” appears, go to Telegram and send your bot any message." data-ja="「連携を検出中…」が表示されたら、Telegram で自分の bot に任意のメッセージを送信。">弹「正在检测绑定…」后,去 Telegram 给你的 bot 发任意一条消息。</div></div></div>
+      <div class="step-row"><div class="step-connector"><div class="step-dot orange">4</div><div class="step-line"></div></div>
+        <div class="step-content"><div class="step-label i18n" data-zh="自动轮询" data-en="Automatic polling" data-ja="自動ポーリング">自动轮询</div><div class="step-desc i18n" data-zh="每 10 秒检测一次,<strong>最多 2 分钟</strong>;成功自动提示,可「取消」中止。" data-en="Checks every 10 seconds for <strong>up to 2 minutes</strong>; notifies you on success, click “Cancel” to abort." data-ja="10 秒ごとに検出し<strong>最大 2 分間</strong>続きます;成功すると自動通知、「キャンセル」で中止できます。">每 10 秒检测一次,<strong>最多 2 分钟</strong>;成功自动提示,可「取消」中止。</div></div></div>
+      <div class="step-row"><div class="step-connector"><div class="step-dot orange">5</div></div>
+        <div class="step-content"><div class="step-label i18n" data-zh="失败处理" data-en="On failure" data-ja="失敗時の対応">失败处理</div><div class="step-desc i18n" data-zh="超时则留在绑定框,可<strong>重输 token 重试</strong>或选「下一步」稍后再绑 —— 不会自动跳过。" data-en="On timeout it stays on the linking dialog, where you can <strong>re-enter the token and retry</strong> or choose “Next” to link later — it won't skip automatically." data-ja="タイムアウトすると連携画面に留まり、<strong>token を再入力して再試行</strong>するか「次へ」で後で連携できます —— 自動的にスキップしません。">超时则留在绑定框,可<strong>重输 token 重试</strong>或选「下一步」稍后再绑 —— 不会自动跳过。</div></div></div>
+    </div>
+  </section>
+
+  <section id="sec6">
+    <div class="section-title i18n" data-zh="⑥ 授予系统权限(首次必做)" data-en="⑥ Granting System Permissions (First Run)" data-ja="⑥ システム権限の付与(初回必須)">⑥ 授予系统权限(首次必做)</div>
+    <p class="i18n" data-zh="部分功能需要 macOS 授权,<strong>首次从菜单各点一次</strong>触发授权弹窗:" data-en="Some features need macOS authorization. <strong>Click each one once from the menu the first time</strong> to trigger the authorization prompt:" data-ja="一部の機能には macOS の認可が必要です。<strong>初回はメニューから各機能を1回ずつクリック</strong>して認可ダイアログを表示させます:">部分功能需要 macOS 授权,<strong>首次从菜单各点一次</strong>触发授权弹窗:</p>
+    <table>
+      <thead><tr><th class="i18n" data-zh="功能" data-en="Feature" data-ja="機能">功能</th><th class="i18n" data-zh="需要的权限" data-en="Permission needed" data-ja="必要な権限">需要的权限</th><th class="i18n" data-zh="在哪授权" data-en="Where to authorize" data-ja="認可する場所">在哪授权</th></tr></thead>
+      <tbody>
+        <tr><td class="i18n" data-zh="拍照 / 录音" data-en="Photo / audio" data-ja="撮影 / 録音">拍照 / 录音</td><td class="i18n" data-zh="摄像头 / 麦克风" data-en="Camera / Microphone" data-ja="カメラ / マイク">摄像头 / 麦克风</td><td class="i18n" data-zh="首次点「拍照+录音」会弹请求" data-en="The first “Photo + audio” click prompts a request" data-ja="初回の「撮影+録音」クリックでリクエストが表示">首次点「拍照+录音」会弹请求</td></tr>
+        <tr><td class="i18n" data-zh="iMessage 收命令" data-en="iMessage command reception" data-ja="iMessage でコマンド受信">iMessage 收命令</td><td class="i18n" data-zh="完全磁盘访问" data-en="Full Disk Access" data-ja="フルディスクアクセス">完全磁盘访问</td><td class="i18n" data-zh="设置 → 完全磁盘访问(引导打开设置页)" data-en="Settings → Full Disk Access (wizard opens the settings page)" data-ja="設定 → フルディスクアクセス(ウィザードが設定ページを開く)">设置 → 完全磁盘访问(引导打开设置页)</td></tr>
+        <tr><td class="i18n" data-zh="系统锁屏 / 遮罩" data-en="System lock / veil" data-ja="システムロック / 遮蔽">系统锁屏 / 遮罩</td><td class="i18n" data-zh="辅助功能" data-en="Accessibility" data-ja="アクセシビリティ">辅助功能</td><td class="i18n" data-zh="首次可能弹请求" data-en="May prompt a request on first use" data-ja="初回にリクエストが表示される場合あり">首次可能弹请求</td></tr>
+      </tbody>
+    </table>
+    <div class="alert warn"><span>⚠️</span><div class="alert-text i18n" data-zh="授权后再<strong>重启验证</strong>:登录即自动升遮罩 + 后台服务自启。未授权时相关功能不工作。" data-en="After authorizing, <strong>restart to verify</strong>: the veil rises automatically on login + background services auto-start. Features won't work until authorized." data-ja="認可後は<strong>再起動して確認</strong>:ログインで遮蔽が自動表示 + バックグラウンドサービスが自動起動。未認可だと該当機能は動作しません。">授权后再<strong>重启验证</strong>:登录即自动升遮罩 + 后台服务自启。未授权时相关功能不工作。</div></div>
+  </section>
+
+  <section id="sec7">
+    <div class="section-title green i18n" data-zh="⑦ 卸载" data-en="⑦ Uninstalling" data-ja="⑦ アンインストール">⑦ 卸载</div>
+    <p class="i18n" data-zh="双击 <code>dist/</code> 里的 <code>Uninstall lockmac.command</code> → 输入 <code>yes</code> 确认 → 输入 Mac 密码 → 彻底删除 App、服务、配置。" data-en="Double-click <code>Uninstall lockmac.command</code> in <code>dist/</code> → type <code>yes</code> to confirm → enter your Mac password → completely removes the app, services, and config." data-ja="<code>dist/</code> 内の <code>Uninstall lockmac.command</code> をダブルクリック → <code>yes</code> と入力して確認 → Mac のパスワードを入力 → アプリ・サービス・設定を完全に削除。">双击 <code>dist/</code> 里的 <code>Uninstall lockmac.command</code> → 输入 <code>yes</code> 确认 → 输入 Mac 密码 → 彻底删除 App、服务、配置。</p>
+    <div class="alert warn"><span>🗑</span><div class="alert-text i18n" data-zh="卸载会删除<strong>配置(密码 / Telegram token)</strong>。也可手动:把 <code>/Applications/lockmac.app</code> 拖废纸篓 + 菜单「服务 → 停止全部服务」。" data-en="Uninstalling deletes the <strong>config (password / Telegram token)</strong>. You can also do it manually: drag <code>/Applications/lockmac.app</code> to the Trash + menu “Services → Stop all services”." data-ja="アンインストールすると<strong>設定(パスワード / Telegram token)</strong>が削除されます。手動でも可:<code>/Applications/lockmac.app</code> をゴミ箱にドラッグ + メニュー「サービス → すべてのサービスを停止」。">卸载会删除<strong>配置(密码 / Telegram token)</strong>。也可手动:把 <code>/Applications/lockmac.app</code> 拖废纸篓 + 菜单「服务 → 停止全部服务」。</div></div>
+  </section>
+</div>
+
+<script>
+function setLang(l){
+  document.documentElement.lang = (l==='zh') ? 'zh-CN' : l;
+  document.querySelectorAll('.i18n').forEach(function(e){
+    var v=e.getAttribute('data-'+l); if(v!=null) e.innerHTML=v;
+  });
+  document.querySelectorAll('.i18n-svg').forEach(function(e){
+    var v=e.getAttribute('data-'+l); if(v!=null) e.textContent=v;
+  });
+  ['zh','en','ja'].forEach(function(k){
+    var b=document.getElementById('b-'+k); if(b) b.classList.toggle('active', k===l);
+  });
+  var t=document.querySelector('title'); if(t){var tv=t.getAttribute('data-'+l); if(tv) document.title=tv;}
+  try{localStorage.setItem('lockmacLang',l);}catch(e){}
+}
+(function(){var saved=null;try{saved=localStorage.getItem('lockmacLang');}catch(e){}setLang(saved||'zh');})();
+
+const toggleBtn=document.querySelector('.toc-toggle'),panel=document.querySelector('.toc-panel'),backdrop=document.querySelector('.toc-backdrop');
+function closeTOC(){document.body.classList.remove('toc-open');}
+function toggleTOC(){document.body.classList.toggle('toc-open');}
+backdrop.addEventListener('click',closeTOC);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTOC();});
+const DRAG_THRESHOLD=5,MARGIN=8;let dragState=null;
+function updatePanelPosition(){const rect=toggleBtn.getBoundingClientRect(),vw=innerWidth,vh=innerHeight,panelW=Math.min(280,vw-32),panelH=panel.offsetHeight||400,gap=12;let left,top,o;
+  if(rect.left+rect.width/2<vw/2){left=rect.left;o='left';}else{left=rect.right-panelW;o='right';}
+  if(rect.top+rect.height/2<vh/2){top=rect.bottom+gap;o='top '+o;}else{top=rect.top-panelH-gap;o='bottom '+o;}
+  left=Math.max(MARGIN,Math.min(left,vw-panelW-MARGIN));top=Math.max(MARGIN,Math.min(top,vh-panelH-MARGIN));
+  Object.assign(panel.style,{left:left+'px',top:top+'px',right:'auto',bottom:'auto',width:panelW+'px',transformOrigin:o});}
+function setButtonPosition(x,y){const r=toggleBtn.getBoundingClientRect(),s=r.width;x=Math.max(MARGIN,Math.min(x,innerWidth-s-MARGIN));y=Math.max(MARGIN,Math.min(y,innerHeight-s-MARGIN));Object.assign(toggleBtn.style,{left:x+'px',top:y+'px',right:'auto',bottom:'auto'});try{sessionStorage.setItem('tocBtnPos',JSON.stringify({x,y}));}catch(e){}}
+function pc(e){if(e.touches?.length)return{x:e.touches[0].clientX,y:e.touches[0].clientY};if(e.changedTouches?.length)return{x:e.changedTouches[0].clientX,y:e.changedTouches[0].clientY};return{x:e.clientX,y:e.clientY};}
+function down(e){const r=toggleBtn.getBoundingClientRect(),p=pc(e);dragState={startX:p.x,startY:p.y,btnX:r.left,btnY:r.top,moved:false};if(document.body.classList.contains('toc-open'))closeTOC();e.preventDefault();}
+function move(e){if(!dragState)return;const p=pc(e),dx=p.x-dragState.startX,dy=p.y-dragState.startY;if(!dragState.moved&&Math.hypot(dx,dy)>DRAG_THRESHOLD){dragState.moved=true;toggleBtn.classList.add('dragging');}if(dragState.moved){setButtonPosition(dragState.btnX+dx,dragState.btnY+dy);e.preventDefault();}}
+function up(){if(!dragState)return;const w=dragState.moved;dragState=null;toggleBtn.classList.remove('dragging');if(!w){toggleTOC();if(document.body.classList.contains('toc-open'))updatePanelPosition();}}
+toggleBtn.addEventListener('mousedown',down);toggleBtn.addEventListener('touchstart',down,{passive:false});
+addEventListener('mousemove',move);addEventListener('touchmove',move,{passive:false});addEventListener('mouseup',up);addEventListener('touchend',up);
+try{const s=sessionStorage.getItem('tocBtnPos');if(s){const p=JSON.parse(s);setButtonPosition(p.x,p.y);}}catch(e){}
+addEventListener('resize',()=>{const r=toggleBtn.getBoundingClientRect();if(toggleBtn.style.left)setButtonPosition(r.left,r.top);if(document.body.classList.contains('toc-open'))updatePanelPosition();});
+document.querySelectorAll('.toc-item').forEach(a=>a.addEventListener('click',closeTOC));
+const links=document.querySelectorAll('.toc-item'),secs=[...links].map(a=>document.querySelector(a.getAttribute('href')));
+const ob=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){const id=en.target.id;links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));}});},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>s&&ob.observe(s));
+</script>
+</body>
+</html>

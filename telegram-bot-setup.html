@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lockmac — 如何获取 Telegram Bot / Token</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#fff;--bg2:#f8f9fb;--bg3:#f0f2f5;--border:#e2e6ed;--blue:#2563eb;
+    --green:#16a34a;--orange:#d97706;--text:#1e293b;--muted:#64748b;}
+  *{box-sizing:border-box}
+  body{font-family:'Noto Sans SC',sans-serif;color:var(--text);background:var(--bg);
+    max-width:840px;margin:0 auto;padding:36px 18px;line-height:1.7}
+  h1{font-size:1.7rem;margin:0 0 .2rem}
+  .intro{color:var(--muted);margin:.3rem 0 1rem}
+  .langbar{position:sticky;top:0;background:var(--bg);padding:.6rem 0;z-index:5;
+    border-bottom:1px solid var(--border)}
+  .langbar button{font:inherit;margin-right:.4rem;padding:.3rem .8rem;border:1px solid var(--border);
+    border-radius:8px;background:transparent;cursor:pointer}
+  .langbar button.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+  h2{font-size:1.2rem;margin:1.8rem 0 .6rem;display:flex;align-items:center;gap:10px}
+  h2::before{content:'';width:4px;height:20px;background:var(--blue);border-radius:2px}
+  .step{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+  .step:last-child{border-bottom:none}
+  .num{flex:none;width:30px;height:30px;border-radius:50%;background:rgba(37,99,235,.1);
+    color:var(--blue);border:2px solid var(--blue);display:flex;align-items:center;
+    justify-content:center;font-weight:700}
+  .step-body{flex:1}
+  .step-title{font-weight:500;margin-bottom:8px}
+  /* Telegram-style chat mockup */
+  .chat{background:#cfd9e6;border-radius:12px;padding:12px;margin-top:6px;
+    display:flex;flex-direction:column;gap:8px;max-width:480px}
+  .bub{max-width:80%;padding:8px 12px;border-radius:14px;font-size:14px;white-space:pre-wrap}
+  .bub.bot{background:#fff;align-self:flex-start;border-top-left-radius:4px}
+  .bub.me{background:#cde6b8;align-self:flex-end;border-top-right-radius:4px}
+  .who{font-size:11px;color:var(--muted);margin:0 4px}
+  .token{font-family:'JetBrains Mono',monospace;background:#0f172a;color:#e2e8f0;
+    padding:2px 8px;border-radius:6px;font-size:13px;word-break:break-all}
+  .term{background:#1e1e1e;border-radius:10px;padding:12px 14px;margin-top:6px;
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:#e2e8f0;max-width:480px}
+  .term .pr{color:#28c840}
+  .search{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);
+    border-radius:10px;padding:8px 12px;max-width:360px;margin-top:6px}
+  .badge{color:#3b82f6}
+  .alert{border-radius:10px;padding:12px 16px;margin:10px 0;font-size:14px;display:flex;gap:10px}
+  .alert.warn{background:rgba(217,119,6,.06);border:1px solid rgba(217,119,6,.2)}
+  .alert.tip{background:rgba(37,99,235,.06);border:1px solid rgba(37,99,235,.18)}
+  table{width:100%;border-collapse:collapse;background:var(--bg2);border:1px solid var(--border);
+    border-radius:10px;overflow:hidden;margin:.4rem 0}
+  td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.q{font-weight:500;white-space:nowrap;color:var(--blue)}
+  code{font-family:'JetBrains Mono',monospace;background:var(--bg3);padding:1px 6px;border-radius:5px}
+  footer{margin-top:2.2rem;color:#94a3b8;font-size:.9rem;border-top:1px solid var(--border);padding-top:1rem}
+</style></head>
+<body>
+<h1>🤖 <span class="i18n" data-zh="获取 Telegram Bot 和 Token" data-en="Get a Telegram Bot &amp; Token" data-ja="Telegram Bot とトークンの取得">获取 Telegram Bot 和 Token</span></h1>
+<p class="intro i18n"
+   data-zh="lockmac 用一个你自己的 Telegram 机器人(bot)来远程控制。下面 7 步教你从零拿到 bot 的 token 并完成绑定。"
+   data-en="lockmac uses your own Telegram bot for remote control. These 7 steps get you a bot token from scratch and bind it."
+   data-ja="lockmac は自分の Telegram bot で遠隔操作します。次の7ステップでトークンを取得し連携します。">lockmac 用一个你自己的 Telegram 机器人(bot)来远程控制。下面 7 步教你从零拿到 bot 的 token 并完成绑定。</p>
+<div class="langbar">
+  <button onclick="setLang('zh')" id="b-zh">中文</button>
+  <button onclick="setLang('en')" id="b-en">English</button>
+  <button onclick="setLang('ja')" id="b-ja">日本語</button>
+</div>
+
+<h2><span class="i18n" data-zh="七步拿到 Token" data-en="7 steps to a token" data-ja="7ステップでトークン取得">七步拿到 Token</span></h2>
+
+<div class="step"><div class="num">1</div><div class="step-body">
+  <div class="step-title i18n"
+    data-zh="打开 Telegram,搜索官方机器人 @BotFather(带蓝色对勾)。"
+    data-en="Open Telegram and search for @BotFather (the official bot, blue check)."
+    data-ja="Telegram で @BotFather を検索（公式・青いチェック）。">打开 Telegram,搜索官方机器人 @BotFather(带蓝色对勾)。</div>
+  <div class="search">🔍 <b>@BotFather</b> <span class="badge">✔︎</span></div>
+</div></div>
+
+<div class="step"><div class="num">2</div><div class="step-body">
+  <div class="step-title i18n"
+    data-zh="给 BotFather 发送命令 /newbot。"
+    data-en="Send the command /newbot to BotFather."
+    data-ja="BotFather に /newbot を送信。">给 BotFather 发送命令 /newbot。</div>
+  <div class="chat">
+    <div class="bub me">/newbot</div>
+    <div class="bub bot i18n"
+      data-zh="好的，新机器人。我们给它起个名字吧？请为你的 bot 选择一个名称。"
+      data-en="Alright, a new bot. How are we going to call it? Please choose a name for your bot."
+      data-ja="新しい bot ですね。名前を決めましょう。bot の名前を入力してください。">好的，新机器人。我们给它起个名字吧？请为你的 bot 选择一个名称。</div>
+  </div>
+</div></div>
+
+<div class="step"><div class="num">3</div><div class="step-body">
+  <div class="step-title i18n"
+    data-zh="输入一个显示名称(任意,如 My Lock Bot)。"
+    data-en="Enter a display name (anything, e.g. My Lock Bot)."
+    data-ja="表示名を入力（任意、例：My Lock Bot）。">输入一个显示名称(任意,如 My Lock Bot)。</div>
+  <div class="chat"><div class="bub me">My Lock Bot</div></div>
+</div></div>
+
+<div class="step"><div class="num">4</div><div class="step-body">
+  <div class="step-title i18n"
+    data-zh="输入用户名,必须以 bot 结尾,且全局唯一(如 mylock_2025_bot)。"
+    data-en="Enter a username — must end in 'bot' and be globally unique (e.g. mylock_2025_bot)."
+    data-ja="ユーザー名を入力（末尾は bot、全体で一意。例 mylock_2025_bot）。">输入用户名,必须以 bot 结尾,且全局唯一(如 mylock_2025_bot)。</div>
+  <div class="chat"><div class="bub me">mylock_2025_bot</div></div>
+</div></div>
+
+<div class="step"><div class="num">5</div><div class="step-body">
+  <div class="step-title i18n"
+    data-zh="BotFather 回复你的 Token。复制它——这是访问密钥,务必保密!"
+    data-en="BotFather replies with your token. Copy it — it's an access key, keep it secret!"
+    data-ja="BotFather がトークンを返信。コピーして——アクセスキーなので秘密に！">BotFather 回复你的 Token。复制它——这是访问密钥,务必保密!</div>
+  <div class="chat">
+    <div class="bub bot i18n"
+      data-zh="完成！恭喜。使用下面的 token 访问 HTTP API："
+      data-en="Done! Congratulations. Use this token to access the HTTP API:"
+      data-ja="完了！おめでとう。次のトークンで HTTP API にアクセスできます：">完成！恭喜。使用下面的 token 访问 HTTP API：</div>
+    <div class="bub bot"><span class="token">8123456789:AAH7k...Qm3vX_example_token</span></div>
+  </div>
+</div></div>
+
+<div class="step"><div class="num">6</div><div class="step-body">
+  <div class="step-title i18n"
+    data-zh="打开你新建的 bot(点 BotFather 给的 t.me 链接),给它发任意一条消息(如 hi)。lockmac 需要它来确定你的 chat id。"
+    data-en="Open your new bot (tap the t.me link BotFather gave) and send it any message (e.g. hi). lockmac needs this to learn your chat id."
+    data-ja="新しい bot を開き（t.me リンク）、何かメッセージを送る（例 hi）。chat id 取得に必要です。">打开你新建的 bot(点 BotFather 给的 t.me 链接),给它发任意一条消息(如 hi)。lockmac 需要它来确定你的 chat id。</div>
+  <div class="chat"><div class="bub me">hi</div></div>
+</div></div>
+
+<div class="step"><div class="num">7</div><div class="step-body">
+  <div class="step-title i18n"
+    data-zh="在终端运行 lockmac tg-setup,粘贴 token。它会轮询获取 chat id。"
+    data-en="Run lockmac tg-setup in a terminal and paste the token. It polls for your chat id."
+    data-ja="端末で lockmac tg-setup を実行しトークンを貼付。chat id を取得します。">在终端运行 lockmac tg-setup,粘贴 token。它会轮询获取 chat id。</div>
+  <div class="term"><span class="pr">$</span> lockmac tg-setup</div>
+  <div class="alert warn"><span>⏳</span><span class="i18n"
+    data-zh="重要:刚用 @BotFather 新建的 bot,通常要等 3–5 分钟才能取到你发的消息。tg-setup 会自动轮询约 3 分钟;若仍没取到,过几分钟再重跑 lockmac tg-setup 即可(消息还在)。"
+    data-en="Important: a freshly created bot often needs 3–5 minutes before your message is retrievable. tg-setup polls for ~3 min; if it still fails, wait a few minutes and re-run lockmac tg-setup (your message persists)."
+    data-ja="重要：新規 bot は送信メッセージが取得できるまで 3〜5 分かかることがあります。tg-setup は約3分ポーリング;取れなければ数分後に再実行を（メッセージは残ります）。">重要:刚用 @BotFather 新建的 bot,通常要等 3–5 分钟才能取到你发的消息。tg-setup 会自动轮询约 3 分钟;若仍没取到,过几分钟再重跑 lockmac tg-setup 即可(消息还在)。</span></div>
+</div></div>
+
+<h2><span class="i18n" data-zh="安全 & 常见问题" data-en="Security &amp; FAQ" data-ja="セキュリティ & FAQ">安全 & 常见问题</span></h2>
+
+<div class="alert tip"><span>🔑</span><span class="i18n"
+  data-zh="Token 等于密码:别提交进代码、别发群里。泄露了就在 @BotFather 发 /revoke(或 /token)重置,旧 token 立即失效。"
+  data-en="The token is a password: never commit it or post it. If leaked, send /revoke (or /token) to @BotFather to regenerate — the old one dies instantly."
+  data-ja="トークンはパスワード相当:コミットや共有は厳禁。漏れたら @BotFather に /revoke（/token）で再生成、旧トークンは即無効。">Token 等于密码:别提交进代码、别发群里。泄露了就在 @BotFather 发 /revoke(或 /token)重置,旧 token 立即失效。</span></div>
+
+<table>
+  <tr><td class="q i18n" data-zh="一个 token 能给多人用吗?" data-en="Can one token serve multiple people?" data-ja="1つのトークンを複数人で?">一个 token 能给多人用吗?</td>
+    <td class="i18n"
+      data-zh="一个 token = 一个 bot;一个 bot 本身能和很多人对话(各有不同 chat id)。但 lockmac 只绑定一个 chat(fail-closed,只听你那一个),所以实际是「你一个人控制」。"
+      data-en="One token = one bot; a bot can chat with many people (each a distinct chat id). But lockmac binds exactly one chat (fail-closed), so in practice only you control it."
+      data-ja="1トークン=1bot;bot 自体は多数の人と会話可能（各 chat id）。ただし lockmac は1つの chat のみに紐付け（fail-closed）なので、実質あなただけが操作します。">一个 token = 一个 bot;一个 bot 本身能和很多人对话(各有不同 chat id)。但 lockmac 只绑定一个 chat(fail-closed,只听你那一个),所以实际是「你一个人控制」。</td></tr>
+  <tr><td class="q i18n" data-zh="一台机器能用多个 token/bot 吗?" data-en="Multiple tokens/bots on one Mac?" data-ja="1台で複数トークン/bot?">一台机器能用多个 token/bot 吗?</td>
+    <td class="i18n"
+      data-zh="目前一台机器的 lockmac 只保存一份配置 = 绑一个 bot。要换 bot,重跑 lockmac tg-setup 覆盖即可。同一时刻不支持多个 bot 并存(需要多份配置,属未来增强)。"
+      data-en="Currently one lockmac install keeps a single config = one bot. To switch bots, re-run lockmac tg-setup (overwrites). Running several bots at once isn't supported yet (would need separate configs — a future enhancement)."
+      data-ja="現状 lockmac は設定1つ=bot 1つ。bot を替えるには lockmac tg-setup を再実行（上書き）。複数 bot の同時運用は未対応（設定の分離が必要、将来の拡張）。">目前一台机器的 lockmac 只保存一份配置 = 绑一个 bot。要换 bot,重跑 lockmac tg-setup 覆盖即可。同一时刻不支持多个 bot 并存(需要多份配置,属未来增强)。</td></tr>
+  <tr><td class="q i18n" data-zh="同一个 token 能被两个程序同时用吗?" data-en="Two programs polling one token?" data-ja="同一トークンを2プログラムで?">同一个 token 能被两个程序同时用吗?</td>
+    <td class="i18n"
+      data-zh="不能。Telegram 的 getUpdates 每个 token 同时只允许一个消费者。若 lockmac 和别的程序(如另一个 relay)轮询同一 bot,会互相抢消息并报 409 冲突——给 lockmac 单独建一个 bot。"
+      data-en="No. Telegram's getUpdates allows only one consumer per token at a time. If lockmac and another program poll the same bot, they fight and hit a 409 conflict — give lockmac its own bot."
+      data-ja="不可。getUpdates は token ごとに同時1消費者のみ。lockmac と別プログラムが同じ bot をポーリングすると競合し 409。lockmac 専用の bot を。">不能。Telegram 的 getUpdates 每个 token 同时只允许一个消费者。若 lockmac 和别的程序(如另一个 relay)轮询同一 bot,会互相抢消息并报 409 冲突——给 lockmac 单独建一个 bot。</td></tr>
+</table>
+
+<footer>lockmac · docs/USAGE.md · README.md</footer>
+<script>
+function setLang(l){
+  document.documentElement.lang=l;
+  document.querySelectorAll('.i18n').forEach(function(e){
+    var v=e.getAttribute('data-'+l); if(v) e.textContent=v;
+  });
+  ['zh','en','ja'].forEach(function(k){
+    var b=document.getElementById('b-'+k); if(b) b.classList.toggle('active',k===l);
+  });
+}
+setLang('zh');
+</script>
+</body></html>
