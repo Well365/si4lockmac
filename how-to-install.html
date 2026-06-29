@@ -1,0 +1,144 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lockmac — 如何安装 / How to install / インストール方法</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#fff;--bg2:#f8f9fb;--bg3:#f0f2f5;--border:#e2e6ed;--blue:#2563eb;
+    --green:#16a34a;--orange:#d97706;--red:#dc2626;--text:#1e293b;--muted:#64748b;}
+  *{box-sizing:border-box;}
+  body{font-family:'Noto Sans SC',sans-serif;color:var(--text);background:var(--bg);
+    max-width:760px;margin:0 auto;padding:32px 20px;line-height:1.7;}
+  h1{font-size:1.7rem;margin:0 0 .3rem;}
+  .sub{color:var(--muted);margin:.2rem 0 1rem;}
+  .langbar{position:sticky;top:0;background:var(--bg);padding:.6rem 0;z-index:5;
+    border-bottom:1px solid var(--border);margin-bottom:1.2rem;}
+  .langbar button{font:inherit;margin-right:.4rem;padding:.3rem .8rem;border:1px solid var(--border);
+    border-radius:8px;background:transparent;cursor:pointer;}
+  .langbar button.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .step{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}
+  .step:last-child{border-bottom:none;}
+  .num{flex:none;width:30px;height:30px;border-radius:50%;background:rgba(37,99,235,.1);
+    color:var(--blue);border:2px solid var(--blue);display:flex;align-items:center;
+    justify-content:center;font-weight:700;}
+  .step-b{font-weight:600;margin-bottom:3px;}
+  .step-d{color:var(--muted);font-size:14px;}
+  .alert{border-radius:10px;padding:13px 16px;font-size:14px;display:flex;gap:10px;margin:16px 0;}
+  .warn{background:rgba(217,119,6,.06);border:1px solid rgba(217,119,6,.2);}
+  .tip{background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.15);}
+  .ok{background:rgba(22,163,74,.05);border:1px solid rgba(22,163,74,.18);}
+  .a-t{color:var(--muted);} .a-t strong{color:var(--text);}
+  code,.kbd{font-family:'JetBrains Mono',monospace;font-size:.85em;background:var(--bg3);
+    padding:1px 6px;border-radius:4px;}
+  .pill{display:inline-block;background:var(--blue);color:#fff;border-radius:7px;
+    padding:2px 10px;font-size:13px;font-weight:600;}
+  h2{font-size:1.15rem;margin:1.8rem 0 .6rem;display:flex;align-items:center;gap:8px;}
+  h2::before{content:'';width:4px;height:18px;background:var(--blue);border-radius:2px;}
+  .mock{background:#1e1e1e;border-radius:10px;padding:14px 16px;margin:10px 0;color:#e2e8f0;font-size:13px;}
+  .mock .row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #333;}
+  .mock .row:last-child{border-bottom:none;}
+  .mock .hl{background:rgba(220,38,38,.18);border:1px solid var(--red);border-radius:6px;padding:8px 10px;}
+  .mock .btn{background:#0a84ff;color:#fff;border-radius:6px;padding:3px 12px;font-size:12px;}
+</style></head>
+<body>
+<h1>🔒 lockmac</h1>
+<div class="sub i18n" data-zh="如何安装(含「文件已损坏 / 无法验证」的解决)"
+  data-en="How to install (and clearing the “file is damaged / can't be verified” prompt)"
+  data-ja="インストール方法(「壊れている/確認できない」の対処)">如何安装(含「文件已损坏 / 无法验证」的解决)</div>
+<div class="langbar">
+  <button onclick="setLang('zh')" id="b-zh">中文</button>
+  <button onclick="setLang('en')" id="b-en">English</button>
+  <button onclick="setLang('ja')" id="b-ja">日本語</button>
+</div>
+
+<div class="alert tip"><span>💡</span><div class="a-t i18n"
+  data-zh="<strong>为什么会提示损坏?</strong> 这个安装器没有花钱购买 Apple 付费签名,macOS 默认会拦下来并显示「已损坏 / 无法验证开发者」。程序本身是安全的——按下面三步放行一次即可,以后不再提示。"
+  data-en="<strong>Why the “damaged” prompt?</strong> The installer isn't paid-Apple-signed, so macOS blocks it once and says “damaged / unidentified developer.” It's safe — allow it once with the 3 steps below; you won't be asked again."
+  data-ja="<strong>なぜ「壊れている」?</strong> 有料のApple署名がないため、macOSが一度ブロックし「壊れている/開発元を確認できない」と表示します。安全です。下の3手順で一度許可すれば、次回からは出ません。">
+  <strong>为什么会提示损坏?</strong> 这个安装器没有花钱购买 Apple 付费签名,macOS 默认会拦下来并显示「已损坏 / 无法验证开发者」。程序本身是安全的——按下面三步放行一次即可,以后不再提示。</div></div>
+
+<h2 class="i18n" data-zh="三步安装" data-en="Install in 3 steps" data-ja="3ステップで導入">三步安装</h2>
+
+<div class="step"><div class="num">1</div><div>
+  <div class="step-b i18n" data-zh="双击 click_me_Install_lockmac.command"
+    data-en="Double-click click_me_Install_lockmac.command"
+    data-ja="click_me_Install_lockmac.command をダブルクリック">双击 click_me_Install_lockmac.command</div>
+  <div class="step-d i18n" data-zh="在 tg-remote-lock-release 文件夹里。"
+    data-en="It's inside the tg-remote-lock-release folder."
+    data-ja="tg-remote-lock-release フォルダ内にあります。">在 tg-remote-lock-release 文件夹里。</div>
+</div></div>
+
+<div class="step"><div class="num">2</div><div>
+  <div class="step-b i18n" data-zh="弹出「已损坏 / 无法打开」—— 先不用管,点「完成」或「取消」关掉它"
+    data-en="A “damaged / can't be opened” dialog appears — ignore it; click Done/Cancel to close"
+    data-ja="「壊れている/開けない」ダイアログ —— 無視して「完了/キャンセル」で閉じる">弹出「已损坏 / 无法打开」—— 先不用管,点「完成」或「取消」关掉它</div>
+  <div class="step-d i18n" data-zh="这是 macOS 的正常拦截,不是真的损坏。"
+    data-en="This is macOS's normal block, not actual damage."
+    data-ja="これは macOS の通常のブロックで、実際の破損ではありません。">这是 macOS 的正常拦截,不是真的损坏。</div>
+</div></div>
+
+<div class="step"><div class="num">3</div><div>
+  <div class="step-b i18n" data-zh="打开 “系统设置 → 隐私与安全性”,滚到底部「安全性」,点「仍要打开」"
+    data-en="Open System Settings → Privacy & Security, scroll to “Security”, click “Open Anyway”"
+    data-ja="システム設定 → プライバシーとセキュリティ → 一番下「セキュリティ」→「このまま開く」">打开 “系统设置 → 隐私与安全性”,滚到底部「安全性」,点「仍要打开」</div>
+  <div class="mock">
+    <div class="row"><span class="i18n" data-zh="安全性" data-en="Security" data-ja="セキュリティ" style="color:#888">安全性</span></div>
+    <div class="row hl">
+      <span class="i18n" data-zh="已阻止 “click_me_Install_lockmac.command” 以保护 Mac。"
+        data-en="“click_me_Install_lockmac.command” was blocked to protect your Mac."
+        data-ja="「click_me_Install_lockmac.command」はブロックされました。">已阻止 “click_me_Install_lockmac.command” 以保护 Mac。</span>
+      <span class="btn i18n" data-zh="仍要打开" data-en="Open Anyway" data-ja="このまま開く">仍要打开</span>
+    </div>
+  </div>
+</div></div>
+
+<div class="step"><div class="num">4</div><div>
+  <div class="step-b i18n" data-zh="再弹一次确认框,点「仍要打开」→ 输入 Mac 密码"
+    data-en="A confirm dialog appears — click “Open Anyway” → enter your Mac password"
+    data-ja="確認ダイアログ →「このまま開く」→ Mac のパスワードを入力">再弹一次确认框,点「仍要打开」→ 输入 Mac 密码</div>
+  <div class="mock">
+    <div class="row" style="border:none;justify-content:center;flex-direction:column;gap:8px">
+      <span class="i18n" style="text-align:center" data-zh="打开 “click_me_Install_lockmac.command”?"
+        data-en="Open “click_me_Install_lockmac.command”?"
+        data-ja="「click_me_Install_lockmac.command」を開きますか?">打开 “click_me_Install_lockmac.command”?</span>
+      <span class="hl" style="text-align:center"><span class="i18n" data-zh="仍要打开" data-en="Open Anyway" data-ja="このまま開く">仍要打开</span></span>
+    </div>
+  </div>
+  <div class="step-d i18n" data-zh="安装器随后会自动运行,菜单栏出现 🔒,设置引导自动弹出。"
+    data-en="The installer then runs; 🔒 appears in the menu bar and the setup wizard opens."
+    data-ja="その後インストーラが実行され、メニューバーに🔒が出て設定ウィザードが開きます。">安装器随后会自动运行,菜单栏出现 🔒,设置引导自动弹出。</div>
+</div></div>
+
+<div class="alert ok"><span>✅</span><div class="a-t i18n"
+  data-zh="<strong>只需放行这一次。</strong>之后菜单栏点 🔒 即可使用全部功能。"
+  data-en="<strong>You only allow it once.</strong> After that, click 🔒 in the menu bar to use everything."
+  data-ja="<strong>許可は一度だけ。</strong>以降はメニューバーの🔒から全機能を利用できます。">
+  <strong>只需放行这一次。</strong>之后菜单栏点 🔒 即可使用全部功能。</div></div>
+
+<h2 class="i18n" data-zh="懂命令行?一行搞定" data-en="Prefer the terminal? One line" data-ja="ターミナル派?1行で">懂命令行?一行搞定</h2>
+<div class="alert tip"><span>⌨️</span><div class="a-t i18n"
+  data-zh="终端运行(完全不弹拦截):<br><code>sudo installer -pkg lockmac-0.5.0.pkg -target /</code>"
+  data-en="Run in Terminal (no Gatekeeper prompt at all):<br><code>sudo installer -pkg lockmac-0.5.0.pkg -target /</code>"
+  data-ja="ターミナルで実行(ブロックなし):<br><code>sudo installer -pkg lockmac-0.5.0.pkg -target /</code>">
+  终端运行(完全不弹拦截):<br><code>sudo installer -pkg lockmac-0.5.0.pkg -target /</code></div></div>
+
+<h2 class="i18n" data-zh="卸载" data-en="Uninstall" data-ja="アンインストール">卸载</h2>
+<div class="step" style="border:none"><div class="num" style="background:rgba(220,38,38,.1);border-color:var(--red);color:var(--red)">✕</div><div>
+  <div class="step-d i18n" data-zh="双击 click_me_Uninstall_lockmac.command,输入 yes 确认即可彻底卸载(同样首次需在「隐私与安全性」放行)。"
+    data-en="Double-click click_me_Uninstall_lockmac.command and type yes to fully remove (same first-time Privacy & Security allow)."
+    data-ja="click_me_Uninstall_lockmac.command をダブルクリックし yes で完全削除(初回は同じく許可が必要)。">双击 click_me_Uninstall_lockmac.command,输入 yes 确认即可彻底卸载(同样首次需在「隐私与安全性」放行)。</div>
+</div></div>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('.i18n').forEach(function(e){
+    var v=e.getAttribute('data-'+l); if(v!==null) e.innerHTML=v;
+  });
+  ['zh','en','ja'].forEach(function(x){
+    var b=document.getElementById('b-'+x); if(b) b.classList.toggle('active',x===l);
+  });
+  document.documentElement.lang=l;
+  try{localStorage.setItem('lockmacLang',l);}catch(e){}
+}
+setLang((function(){try{return localStorage.getItem('lockmacLang')||'zh';}catch(e){return 'zh';}})());
+</script>
+</body></html>
