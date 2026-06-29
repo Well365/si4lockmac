@@ -12,6 +12,10 @@
 自包含:纯 Python 标准库 + 一个很小的 Swift 遮罩。不依赖 Telegram、不依赖任何宿主项目。
 (mob-remote 可集成它做远程开关,但 si4lockmac 完全能独立运行。)
 
+![si4lockmac 命令行演示](media/cli-demo.gif)
+
+> 只读命令快速一览(`status`、`deadman`、`offline-lock`、`delete list`)。
+
 > 教程:**[图形界面版 → docs/usage/USAGE-gui.md](docs/usage/USAGE-gui.md)**(免终端)· **[命令行版 → docs/usage/USAGE.md](docs/usage/USAGE.md)**。
 
 ## si4lockmac 能为你做什么

@@ -12,6 +12,10 @@
 ホストプロジェクトも不要。（mob-remote が遠隔オン/オフに統合できますが、si4lockmac
 単体で完全に動作します。）
 
+![si4lockmac CLI デモ](media/cli-demo.gif)
+
+> 読み取り専用コマンドのクイックツアー（`status`・`deadman`・`offline-lock`・`delete list`）。
+
 > 使い方:**[GUI版 → docs/usage/USAGE-gui.md](docs/usage/USAGE-gui.md)**(ターミナル不要)· **[CLI版 → docs/usage/USAGE.md](docs/usage/USAGE.md)**。
 
 ## si4lockmac でできること

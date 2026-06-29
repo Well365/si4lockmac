@@ -12,6 +12,11 @@ Standalone: pure Python stdlib + a tiny Swift overlay. No Telegram, no host
 project required. (mob-remote integrates it for remote on/off, but si4lockmac
 works entirely on its own.)
 
+![si4lockmac CLI demo](media/cli-demo.gif)
+
+> A quick tour of the read-only CLI commands (`status`, `deadman`,
+> `offline-lock`, `delete list`).
+
 ## What si4lockmac does for you
 
 - 🕶️ **Instant privacy veil** — one command (or one tap) blacks out every display
