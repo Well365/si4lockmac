@@ -137,24 +137,74 @@ def menubar(d, W, clock="22:24"):
     draw_text(d, W - 150, 5, "100%   " + clock, 15, (205, 205, 214))
 
 
-def caption(d, W, H, title, body, idx=None, total=None):
-    bar_h = 86
-    y0 = H - bar_h
-    d.rectangle([0, y0, W, H], fill=CAPTION_BG)
-    d.rectangle([0, y0, W, y0 + 3], fill=BLUE)
-    tx = 34
+CAPTION_H = 172
+# vivid, high-contrast caption palette
+VIVID_TITLE = (255, 214, 64)     # gold
+VIVID_BODY = (94, 220, 255)      # cyan
+LANG_TAG = {"中文": (255, 138, 138), "EN": (130, 235, 150), "日本語": (180, 170, 255)}
+
+
+def wrap(text, size, max_w):
+    """Word-aware wrap: latin words stay whole, CJK breaks per char."""
+    tokens, buf = [], ""
+    for ch in text:
+        if is_cjk(ch) or ch == " ":
+            if buf:
+                tokens.append(buf); buf = ""
+            tokens.append(ch)
+        else:
+            buf += ch
+    if buf:
+        tokens.append(buf)
+    lines, cur = [], ""
+    for t in tokens:
+        test = cur + t
+        if text_w(test, size) > max_w and cur.strip():
+            lines.append(cur)
+            cur = "" if t == " " else t
+        else:
+            cur = test
+    if cur.strip():
+        lines.append(cur)
+    return [l.strip() for l in lines] or [""]
+
+
+def caption(d, W, tri, idx=None, total=None):
+    """Top banner. tri = [(tag, title, body)] x3 for zh/en/ja, side by side."""
+    y0 = 0
+    d.rectangle([0, y0, W, CAPTION_H], fill=CAPTION_BG)
+    d.rectangle([0, CAPTION_H - 3, W, CAPTION_H], fill=BLUE)
+    # header strip: step badge (left) + progress dots (right)
     if idx is not None:
-        d.ellipse([tx, y0 + 24, tx + 38, y0 + 62], fill=BLUE)
-        draw_text(d, tx, y0 + 30, str(idx), 22, (255, 255, 255), center_w=38)
-        tx += 58
-    draw_text(d, tx, y0 + 18, title, 22, CAPTION_FG)
-    draw_text(d, tx, y0 + 50, body, 17, ACCENT)
+        d.ellipse([26, 16, 26 + 34, 50], fill=BLUE)
+        draw_text(d, 26, 20, str(idx), 20, (255, 255, 255), center_w=34)
     if idx and total:
-        # step dots
-        dotx = W - 34 - total * 22
+        dotx = W - 28 - total * 20
         for i in range(total):
             c = BLUE if (i + 1) == idx else (70, 74, 90)
-            d.ellipse([dotx + i * 22, y0 + 38, dotx + i * 22 + 10, y0 + 48], fill=c)
+            d.ellipse([dotx + i * 20, 28, dotx + i * 20 + 10, 38], fill=c)
+    # three language columns
+    pad, gap = 26, 18
+    colw = (W - 2 * pad - 2 * gap) / 3
+    cy = 60
+    for i, (tag, title, body) in enumerate(tri):
+        cx = pad + i * (colw + gap)
+        if i:
+            d.line([cx - gap / 2, cy - 4, cx - gap / 2, CAPTION_H - 14], fill=(64, 68, 86))
+        draw_text(d, cx, cy, tag, 14, LANG_TAG.get(tag, (140, 160, 210)))
+        draw_text(d, cx, cy + 22, title, 19, VIVID_TITLE)
+        ty = cy + 52
+        for ln in wrap(body, 15, colw)[:2]:
+            draw_text(d, cx, ty, ln, 15, VIVID_BODY)
+            ty += 23
+
+
+def compose(scene_img, W, H, tri, idx=None, total=None):
+    """Stack a top caption banner over a scene-sized image -> full frame."""
+    full = Image.new("RGB", (W, H), CAPTION_BG)
+    full.paste(scene_img, (0, CAPTION_H))
+    caption(ImageDraw.Draw(full), W, tri, idx=idx, total=total)
+    return full
 
 
 # ── export ───────────────────────────────────────────────────────────────────
