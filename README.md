@@ -14,8 +14,8 @@ works entirely on its own.)
 
 ![si4lockmac CLI demo](media/cli-demo.gif)
 
-> A quick tour of the read-only CLI commands (`status`, `deadman`,
-> `offline-lock`, `delete list`).
+> Trilingual captions (中文 / EN / 日本語). A quick tour of the read-only CLI
+> commands (`status`, `deadman`, `offline-lock`, `delete list`).
 
 ## What si4lockmac does for you
 
@@ -66,8 +66,9 @@ works entirely on its own.)
 
 ![si4lockmac menu-bar demo](media/menu-demo.gif)
 
-> Menu-bar flow (illustration): click the 🔒 icon → pick **开启遮罩 / Veil** →
-> the screen veils black with a password prompt.
+> Trilingual captions (中文 / EN / 日本語). Menu-bar flow (illustration): click
+> the 🔒 icon → pick **开启遮罩 / Veil** → the screen veils black with a password
+> prompt.
 
 ## Install
 
@@ -86,9 +87,9 @@ options (one-line script, building from source) in
 
 ![si4lockmac install walkthrough](media/install-demo.gif)
 
-> Manual `.pkg` install (illustration): download → "未打开" warning → System
-> Settings ▸ **仍要打开 / Open Anyway** → Mac password → installer → done. All
-> data shown is fake.
+> Trilingual captions (中文 / EN / 日本語). Manual `.pkg` install (illustration):
+> download → "未打开" warning → System Settings ▸ **仍要打开 / Open Anyway** → Mac
+> password → installer → done. All data shown is fake.
 
 ## Quick start (3 steps)
 
@@ -107,9 +108,10 @@ New to Telegram bots? See the illustrated 中/EN/日 guide:
 
 ![si4lockmac setup wizard walkthrough](media/setup-demo.gif)
 
-> Menu-bar setup wizard (illustration): set password → bind Telegram → message
-> the bot → bind iMessage → enable 2FA → all services started → the veil screen.
-> Every token / Apple ID / 2FA secret shown is a random placeholder.
+> Trilingual captions (中文 / EN / 日本語). Menu-bar setup wizard (illustration):
+> set password → bind Telegram → message the bot → bind iMessage → enable 2FA →
+> all services started → the veil screen. Every token / Apple ID / 2FA secret
+> shown is a random placeholder.
 
 ## Use
 

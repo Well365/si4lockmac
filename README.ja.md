@@ -14,13 +14,13 @@
 
 ![si4lockmac CLI デモ](media/cli-demo.gif)
 
-> 読み取り専用コマンドのクイックツアー（`status`・`deadman`・`offline-lock`・`delete list`）。
+> 字幕は中/EN/日の三言語。読み取り専用コマンドのクイックツアー（`status`・`deadman`・`offline-lock`・`delete list`）。
 
 > 使い方:**[GUI版 → docs/usage/USAGE-gui.md](docs/usage/USAGE-gui.md)**(ターミナル不要)· **[CLI版 → docs/usage/USAGE.md](docs/usage/USAGE.md)**。
 
 ![si4lockmac メニューバー デモ](media/menu-demo.gif)
 
-> メニューバー操作（イメージ図）:🔒 アイコンをクリック →「遮蔽を表示 / Veil」を選択 → 画面が黒くなりパスワード入力欄が出ます。
+> 字幕は中/EN/日の三言語。メニューバー操作（イメージ図）:🔒 アイコンをクリック →「遮蔽を表示 / Veil」を選択 → 画面が黒くなりパスワード入力欄が出ます。
 
 ## si4lockmac でできること
 
@@ -77,7 +77,7 @@ brew install --cask Well365/lockmac/lockmac
 
 ![si4lockmac インストール デモ](media/install-demo.gif)
 
-> 手動 `.pkg` インストール（イメージ図）:ダウンロード →「未開封」警告 → システム設定 ▸ **このまま開く** → Mac パスワード → インストーラ → 完了。表示データはすべて架空です。
+> 字幕は中/EN/日の三言語。手動 `.pkg` インストール（イメージ図）:ダウンロード →「未開封」警告 → システム設定 ▸ **このまま開く** → Mac パスワード → インストーラ → 完了。表示データはすべて架空です。
 
 ヘルプ:`lockmac --help`（端末の簡易版） · `lockmac help`（自己完結のHTMLページを開く。
 中 / English / 日本語 のコマンド説明付き）。
@@ -100,7 +100,7 @@ Telegram bot の作り方が分からない場合は図解ガイド（中/EN/日
 
 ![si4lockmac セットアップ ウィザード デモ](media/setup-demo.gif)
 
-> メニューバーのセットアップ（イメージ図）:パスワード設定 → Telegram 連携 → bot にメッセージ → iMessage 連携 → 2FA 有効化 → 全サービス起動 → 目隠し画面。表示の token / Apple ID / 2FA 鍵はすべてランダムな架空値です。
+> 字幕は中/EN/日の三言語。メニューバーのセットアップ（イメージ図）:パスワード設定 → Telegram 連携 → bot にメッセージ → iMessage 連携 → 2FA 有効化 → 全サービス起動 → 目隠し画面。表示の token / Apple ID / 2FA 鍵はすべてランダムな架空値です。
 
 ## 使い方
 
