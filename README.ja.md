@@ -75,6 +75,10 @@ brew install --cask Well365/lockmac/lockmac
 
 手動で入れたい場合は `lockmac-0.5.0.pkg` をダブルクリック。その他の方法（ワンライナー、ソースからのビルド）は **[docs/usage/USAGE.md](docs/usage/USAGE.md)** を参照。
 
+![si4lockmac インストール デモ](media/install-demo.gif)
+
+> 手動 `.pkg` インストール（イメージ図）:ダウンロード →「未開封」警告 → システム設定 ▸ **このまま開く** → Mac パスワード → インストーラ → 完了。表示データはすべて架空です。
+
 ヘルプ:`lockmac --help`（端末の簡易版） · `lockmac help`（自己完結のHTMLページを開く。
 中 / English / 日本語 のコマンド説明付き）。
 他のインストール方法（Homebrew / .pkg / ワンライナー）、未署名 .pkg の導入/署名方法、
@@ -93,6 +97,10 @@ lockmac status           # 各サービスを確認
 ```
 
 Telegram bot の作り方が分からない場合は図解ガイド（中/EN/日）:**[docs/usage/telegram-bot-setup.html](docs/usage/telegram-bot-setup.html)**。全停止は `lockmac stop`。
+
+![si4lockmac セットアップ ウィザード デモ](media/setup-demo.gif)
+
+> メニューバーのセットアップ（イメージ図）:パスワード設定 → Telegram 連携 → bot にメッセージ → iMessage 連携 → 2FA 有効化 → 全サービス起動 → 目隠し画面。表示の token / Apple ID / 2FA 鍵はすべてランダムな架空値です。
 
 ## 使い方
 

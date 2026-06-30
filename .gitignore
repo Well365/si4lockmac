@@ -1,2 +1,7 @@
 # Release artifacts are hosted as GitHub Release assets, not committed.
 *.pkg
+
+# macOS / Python cruft
+.DS_Store
+__pycache__/
+*.pyc

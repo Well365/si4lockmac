@@ -84,6 +84,12 @@ Prefer a manual install? Double-click `lockmac-0.5.0.pkg`, or see the other
 options (one-line script, building from source) in
 **[docs/usage/USAGE.md](docs/usage/USAGE.md)**.
 
+![si4lockmac install walkthrough](media/install-demo.gif)
+
+> Manual `.pkg` install (illustration): download → "未打开" warning → System
+> Settings ▸ **仍要打开 / Open Anyway** → Mac password → installer → done. All
+> data shown is fake.
+
 ## Quick start (3 steps)
 
 ```bash
@@ -98,6 +104,12 @@ lockmac status           # check each service
 
 New to Telegram bots? See the illustrated 中/EN/日 guide:
 **[docs/usage/telegram-bot-setup.html](docs/usage/telegram-bot-setup.html)**. Stop everything with `lockmac stop`.
+
+![si4lockmac setup wizard walkthrough](media/setup-demo.gif)
+
+> Menu-bar setup wizard (illustration): set password → bind Telegram → message
+> the bot → bind iMessage → enable 2FA → all services started → the veil screen.
+> Every token / Apple ID / 2FA secret shown is a random placeholder.
 
 ## Use
 

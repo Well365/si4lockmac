@@ -62,6 +62,10 @@ brew install --cask Well365/lockmac/lockmac
 
 想手动安装?双击 `lockmac-0.5.0.pkg`,或查看其它方式(一键脚本、从源码构建)见 **[docs/usage/USAGE.md](docs/usage/USAGE.md)**。
 
+![si4lockmac 安装演示](media/install-demo.gif)
+
+> 手动 `.pkg` 安装(示意图):下载 → 提示「未打开」→ 系统设置 ▸ **仍要打开** → 输 Mac 密码 → 安装向导 → 完成。画面数据全为假。
+
 帮助:`lockmac --help`(终端快速版) · `lockmac help`(打开自包含 HTML 页,中 / English / 日本語 命令说明)。
 其它安装方式(Homebrew / .pkg / 一键脚本)、未签名 .pkg 如何安装/签名、如何更新旧版本,见 **[docs/usage/USAGE.md](docs/usage/USAGE.md)**。
 
@@ -78,6 +82,10 @@ lockmac status           # 查看各服务状态
 ```
 
 不懂怎么弄 Telegram bot?看图文中/英/日教程:**[docs/usage/telegram-bot-setup.html](docs/usage/telegram-bot-setup.html)**。全部停止:`lockmac stop`。
+
+![si4lockmac 设置向导演示](media/setup-demo.gif)
+
+> 菜单栏设置向导(示意图):设密码 → 绑定 Telegram → 给 bot 发消息 → 绑定 iMessage → 开启 2FA → 服务全部启动 → 遮罩界面。所有 token / Apple ID / 2FA 密钥均为随机假值。
 
 ## 使用
 
